@@ -178,5 +178,4 @@ source("scripts/04_geocovariates_merge.R")  # Merges geocovariates for Power BI
 ## Author
 
 **Craig Thompson Omondi Otieno**  
-BSc Statistics, Jomo Kenyatta University of Agriculture and Technology  
 [GitHub](https://github.com/craigthompsonotieno) · [LinkedIn](https://www.linkedin.com/in/craigthompsonotieno/)

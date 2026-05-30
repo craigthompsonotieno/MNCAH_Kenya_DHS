@@ -1,0 +1,42 @@
+# =========================
+# RAW DATA (DO NOT PUSH)
+# =========================
+*.DTA
+*.dta
+*.shp
+*.shx
+*.dbf
+*.prj
+*.sbn
+*.sbx
+*.xml
+
+# =========================
+# R (IGNORE TEMP FILES ONLY)
+# =========================
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+
+
+
+# =========================
+# ENVIRONMENTS
+# =========================
+venv/
+.venv/
+.env
+
+# =========================
+# SYSTEM FILES
+# =========================
+Thumbs.db
+.DS_Store
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/

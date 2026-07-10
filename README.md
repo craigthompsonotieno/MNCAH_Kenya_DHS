@@ -179,3 +179,23 @@ source("scripts/04_geocovariates_merge.R")  # Merges geocovariates for Power BI
 
 **Craig Thompson Omondi Otieno**  
 [GitHub](https://github.com/craigthompsonotieno) · [LinkedIn](https://www.linkedin.com/in/craigthompsonotieno/)
+
+## License and Data Use
+
+### Source code
+
+The original R scripts, documentation and analytical workflow in this repository are licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2026 Craig Thompson Omondi Otieno.
+
+### DHS data
+
+The MIT License applies only to the original source code and documentation created for this project. It does not apply to Kenya Demographic and Health Survey microdata, GPS datasets, geocovariates, questionnaires, reports or other third-party materials.
+
+DHS microdata are not included in this repository. Users must independently register with The DHS Program, request access to the required datasets and comply with the applicable data-use conditions.
+
+Permission to use this repository's code does not provide permission to access, use or redistribute DHS data.
+
+### Disclaimer
+
+This is an independent analytical project and is not an official publication of The DHS Program, the Kenya National Bureau of Statistics, USAID or any other referenced institution.

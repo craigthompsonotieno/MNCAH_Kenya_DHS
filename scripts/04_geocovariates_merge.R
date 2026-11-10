@@ -9,15 +9,14 @@ library(janitor)
 library(writexl)
 
 # 0. PATHS ----
-output_path <- "Data/Clean"
+input_path <- "Data/Clean"
+output_path <- "outputs"
 
-dir.create(file.path(output_path, "powerbi"), showWarnings = FALSE, recursive = TRUE)
-dir.create(file.path(output_path, "tables"),  showWarnings = FALSE, recursive = TRUE)
 
 # 1. LOAD EXISTING OUTPUTS FROM SCRIPTS 1–2 ----
-geo_cov        <- readRDS(file.path(output_path, "geo_cov.rds"))
-all_indicators <- readRDS(file.path(output_path, "all_indicators.rds"))
-wide_indicators <- readRDS(file.path(output_path, "wide_indicators.rds"))
+geo_cov        <- readRDS(file.path(input_path, "geo_cov.rds"))
+all_indicators <- readRDS(file.path(input_path, "all_indicators.rds"))
+wide_indicators <- readRDS(file.path(input_path, "wide_indicators.rds"))
 
 
 # 2. CLEAN NAMES AGAIN JUST IN CASE ----
@@ -45,7 +44,7 @@ if (is.na(cluster_col)) {
 
 # 4. LOAD CLEAN DHS DATA TO GET COUNTY-CLUSTER LINK ----
 # We use household data because it has county + cluster for all sampled households.
-hr <- readRDS(file.path(output_path, "hr_clean.rds"))
+hr <- readRDS(file.path(input_path, "hr_clean.rds"))
 
 county_cluster_lookup <- hr %>%
   select(cluster, county_code, county_name, residence) %>%

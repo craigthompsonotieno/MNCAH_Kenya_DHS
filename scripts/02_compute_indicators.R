@@ -95,17 +95,82 @@ ir_maternal <- ir_maternal %>%
 
 sba <- compute_indicator(ir_maternal, "sba", "Skilled birth attendant (%)")
 
+
 ## 2.3. Postnatal care for mother within 2 days ----
-# m62_1: timing of first PNC check for mother (1 = within 4h, 2 = 4-23h, 3 = 1 day, 4 = 2 days)
-ir_maternal <- ir_maternal %>%
-  mutate(pnc_mother = case_when(
-    as.numeric(m62_1) %in% 1:4 ~ 1L,   # Within 2 days
-    as.numeric(m62_1) > 4      ~ 0L,
-    TRUE                       ~ NA_integer_
-  ))
+# Kenya DHS 2014
+# Most recent birth in the preceding 24 months
 
-pnc <- compute_indicator(ir_maternal, "pnc_mother", "Postnatal care - mother within 2 days (%)")
+required_pnc <- c(
+  "v008", "b3_01", "bidx_01",
+  "m50_1", "m51_1", "m52_1"
+)
 
+stopifnot(all(required_pnc %in% names(ir)))
+
+# Start from ir, NOT ir_maternal.
+# The earlier m14_1 filter is not appropriate for PNC.
+
+ir_pnc <- ir %>%
+  mutate(
+    birth_age_months =
+      as.numeric(v008) - as.numeric(b3_01),
+    
+    pnc_eligible =
+      !is.na(birth_age_months) &
+      birth_age_months >= 0 &
+      birth_age_months < 24 &
+      as.numeric(bidx_01) == 1,
+    
+    pnc_check = as.numeric(m50_1),
+    pnc_time = as.numeric(m51_1),
+    pnc_provider = as.numeric(m52_1),
+    
+    timely_check =
+      between(pnc_time, 100, 171) |
+      between(pnc_time, 200, 202),
+    
+    pnc_mother = case_when(
+      !pnc_eligible ~ NA_integer_,
+      
+      # Missing or not applicable response
+      is.na(pnc_check) ~ NA_integer_,
+      
+      # No postnatal check
+      pnc_check == 0 ~ 0L,
+      
+      # Check without qualifying provider information
+      is.na(pnc_provider) ~ 0L,
+      
+      pnc_provider > 29 &
+        pnc_provider < 97 ~ 0L,
+      
+      # Check occurred within 2 days
+      timely_check %in% TRUE ~ 1L,
+      
+      # Check occurred later or timing unknown
+      TRUE ~ 0L
+    )
+  )
+
+# Check classification before estimation
+print(
+  ir_pnc %>%
+    filter(pnc_eligible) %>%
+    count(pnc_mother)
+)
+
+# Compute survey-weighted national and county estimates
+pnc <- compute_indicator(
+  ir_pnc,
+  "pnc_mother",
+  "Postnatal care - mother within 2 days (%)"
+)
+
+# Display national estimate
+print(
+  pnc %>%
+    filter(county_name == "NATIONAL")
+)
 ## 2.4. Facility delivery ----
 # m15_1: place of delivery — facility = 20-40 range in DHS coding
 ir_maternal <- ir_maternal %>%

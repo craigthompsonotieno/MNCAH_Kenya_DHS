@@ -32,7 +32,6 @@ dhs_path <- "data"
 
 output_path <- "Data/Clean"
 dir.create(output_path, showWarnings = FALSE, recursive = TRUE)
-dir.create(file.path(output_path, "tables"), showWarnings = FALSE)
 dir.create(file.path(output_path, "maps"), showWarnings = FALSE)
 dir.create(file.path(output_path, "powerbi"), showWarnings = FALSE)
 
